@@ -5,20 +5,20 @@ using System.Linq;
 
 namespace MyAzureStoragelibrary
 {
-    public class TableStoragePager
+    public class TableStoragePager<T> where T : ITableEntity
     {
         private const int MAX_RESPONSE = 1000;
 
-        private ITableStorageService _tableStorageService;
+        private ITableStorageService<T> _tableStorageService;
 
 
 
-        public TableStoragePager(ITableStorageService tableStorageService)
+        public TableStoragePager(ITableStorageService<T> tableStorageService)
         {
             _tableStorageService = tableStorageService;
         }
 
-        public TableStoragePagerResult Get(TableStoragePagerContext context, int pageNumber)
+        public TableStoragePagerResult<T> Get(TableStoragePagerContext context, int pageNumber) 
         {
             // Table からデータ取得
             string continuationToken = "";
@@ -27,7 +27,7 @@ namespace MyAzureStoragelibrary
             {
                 continuationToken = context.ContinuationTokens[segment - 1];
             }
-            TableStorageServiceResult result = _tableStorageService.Get(continuationToken);
+            TableStorageServiceResult<T> result = _tableStorageService.Get(continuationToken);
 
             // ContinuationToken の保存
             List<string> tokens = new List<string>();
@@ -61,10 +61,10 @@ namespace MyAzureStoragelibrary
             // 指定ページ番号のデータを抽出
             int offset = (pageNumber - 1) * context.PageSize % MAX_RESPONSE;
             int count = Math.Min(context.PageSize, result.Entities.Count - offset);
-            List<TableEntity> currentEntities = result.Entities.GetRange(offset, count);
+            List<T> currentEntities = result.Entities.GetRange(offset, count);
 
             // データとコンテキストを返却
-            return new TableStoragePagerResult
+            return new TableStoragePagerResult<T>
             {
                 CurrentEntities = currentEntities,
                 Context = new TableStoragePagerContext

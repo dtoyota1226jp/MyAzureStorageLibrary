@@ -29,13 +29,13 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void A_ページ1()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
-            TableStoragePagerResult result = pager.Get(context, 1);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
+            TableStoragePagerResult<TableEntity> result = pager.Get(context, 1);
 
             Assert.AreEqual("RowKey1", result.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey200", result.CurrentEntities.Last().RowKey);
@@ -47,13 +47,13 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void B_ページ1_5()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
-            TableStoragePagerResult result = pager.Get(context, 5);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
+            TableStoragePagerResult<TableEntity> result = pager.Get(context, 5);
 
             Assert.AreEqual("RowKey801", result.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey1000", result.CurrentEntities.Last().RowKey);
@@ -65,15 +65,15 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void C_ページ1_6()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
             
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result6 = pager.Get(result1.Context, 6);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6 = pager.Get(result1.Context, 6);
 
             Assert.AreEqual("RowKey1001", result6.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey1200", result6.CurrentEntities.Last().RowKey);
@@ -85,15 +85,15 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void D_ページ1_10()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result10 = pager.Get(result1.Context, 10);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result10 = pager.Get(result1.Context, 10);
 
             Assert.AreEqual("RowKey1801", result10.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey2000", result10.CurrentEntities.Last().RowKey);
@@ -105,16 +105,16 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void E_ページ1_6_11()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result6 = pager.Get(result1.Context, 6);
-            TableStoragePagerResult result11 = pager.Get(result6.Context, 11);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6 = pager.Get(result1.Context, 6);
+            TableStoragePagerResult<TableEntity> result11 = pager.Get(result6.Context, 11);
 
             Assert.AreEqual("RowKey2001", result11.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey2200", result11.CurrentEntities.Last().RowKey);
@@ -126,17 +126,17 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void F_ページ1_6_11_13()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result6 = pager.Get(result1.Context, 6);
-            TableStoragePagerResult result11 = pager.Get(result6.Context, 11);
-            TableStoragePagerResult result13 = pager.Get(result11.Context, 13);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6 = pager.Get(result1.Context, 6);
+            TableStoragePagerResult<TableEntity> result11 = pager.Get(result6.Context, 11);
+            TableStoragePagerResult<TableEntity> result13 = pager.Get(result11.Context, 13);
 
             Assert.AreEqual("RowKey2401", result13.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey2500", result13.CurrentEntities.Last().RowKey);
@@ -148,18 +148,18 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void G_ページ1_6_11_13_10()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result6 = pager.Get(result1.Context, 6);
-            TableStoragePagerResult result11 = pager.Get(result6.Context, 11);
-            TableStoragePagerResult result13 = pager.Get(result11.Context, 13);
-            TableStoragePagerResult result10 = pager.Get(result13.Context, 10);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6 = pager.Get(result1.Context, 6);
+            TableStoragePagerResult<TableEntity> result11 = pager.Get(result6.Context, 11);
+            TableStoragePagerResult<TableEntity> result13 = pager.Get(result11.Context, 13);
+            TableStoragePagerResult<TableEntity> result10 = pager.Get(result13.Context, 10);
 
             Assert.AreEqual("RowKey1801", result10.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey2000", result10.CurrentEntities.Last().RowKey);
@@ -171,19 +171,19 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void H_ページ1_6_11_13_10_6()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1 = pager.Get(context, 1);
-            TableStoragePagerResult result6a = pager.Get(result1.Context, 6);
-            TableStoragePagerResult result11 = pager.Get(result6a.Context, 11);
-            TableStoragePagerResult result13 = pager.Get(result11.Context, 13);
-            TableStoragePagerResult result10 = pager.Get(result13.Context, 10);
-            TableStoragePagerResult result6b = pager.Get(result10.Context, 6);
+            TableStoragePagerResult<TableEntity> result1 = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6a = pager.Get(result1.Context, 6);
+            TableStoragePagerResult<TableEntity> result11 = pager.Get(result6a.Context, 11);
+            TableStoragePagerResult<TableEntity> result13 = pager.Get(result11.Context, 13);
+            TableStoragePagerResult<TableEntity> result10 = pager.Get(result13.Context, 10);
+            TableStoragePagerResult<TableEntity> result6b = pager.Get(result10.Context, 6);
 
             Assert.AreEqual("RowKey1001", result6b.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey1200", result6b.CurrentEntities.Last().RowKey);
@@ -195,20 +195,20 @@ namespace MyAzureStoragelibraryTest
         [Test]
         public void I_ページ1_6_11_13_10_6_1()
         {
-            ITableStorageService tableStorageService = new MockTableStorageService(_dataSource);
+            ITableStorageService<TableEntity> tableStorageService = new MockTableStorageService<TableEntity>(_dataSource);
             TableStoragePagerContext context = new TableStoragePagerContext
             {
                 PageSize = 200,
             };
-            TableStoragePager pager = new TableStoragePager(tableStorageService);
+            TableStoragePager<TableEntity> pager = new TableStoragePager<TableEntity>(tableStorageService);
 
-            TableStoragePagerResult result1a = pager.Get(context, 1);
-            TableStoragePagerResult result6a = pager.Get(result1a.Context, 6);
-            TableStoragePagerResult result11 = pager.Get(result6a.Context, 11);
-            TableStoragePagerResult result13 = pager.Get(result11.Context, 13);
-            TableStoragePagerResult result10 = pager.Get(result13.Context, 10);
-            TableStoragePagerResult result6b = pager.Get(result10.Context, 6);
-            TableStoragePagerResult result1b = pager.Get(result6b.Context, 1);
+            TableStoragePagerResult<TableEntity> result1a = pager.Get(context, 1);
+            TableStoragePagerResult<TableEntity> result6a = pager.Get(result1a.Context, 6);
+            TableStoragePagerResult<TableEntity> result11 = pager.Get(result6a.Context, 11);
+            TableStoragePagerResult<TableEntity> result13 = pager.Get(result11.Context, 13);
+            TableStoragePagerResult<TableEntity> result10 = pager.Get(result13.Context, 10);
+            TableStoragePagerResult<TableEntity> result6b = pager.Get(result10.Context, 6);
+            TableStoragePagerResult<TableEntity> result1b = pager.Get(result6b.Context, 1);
 
             Assert.AreEqual("RowKey1", result1b.CurrentEntities.First().RowKey);
             Assert.AreEqual("RowKey200", result1b.CurrentEntities.Last().RowKey);

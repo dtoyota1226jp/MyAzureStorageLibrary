@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace MyAzureStoragelibrary
 {
-    public interface ITableStorageService
+    public interface ITableStorageService<T> where T : ITableEntity
     {
-        TableStorageServiceResult Get(string continuationToken);
+        TableStorageServiceResult<T> Get(string continuationToken);
     }
 
-    public class TableStorageServiceResult
+    public class TableStorageServiceResult<T> where T : ITableEntity
     {
-        public List<TableEntity> Entities { get; set; }
+        public List<T> Entities { get; set; }
         public string ContinuationToken { get; set; }
     }
 }

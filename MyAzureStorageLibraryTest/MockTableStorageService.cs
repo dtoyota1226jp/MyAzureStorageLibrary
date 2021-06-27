@@ -5,15 +5,15 @@ using MyAzureStoragelibrary;
 
 namespace MyAzureStoragelibraryTest
 {
-    internal class MockTableStorageService : ITableStorageService
+    internal class MockTableStorageService<T> : ITableStorageService<T> where T : ITableEntity
     {
-        private List<TableEntity> _dataSource;
-        public MockTableStorageService(List<TableEntity> dataSource)
+        private List<T> _dataSource;
+        public MockTableStorageService(List<T> dataSource)
         {
             _dataSource = dataSource;
         }
 
-        public TableStorageServiceResult Get(string continuationToken)
+        public TableStorageServiceResult<T> Get(string continuationToken)
         {
             int offset;
             string newContinuationToken;
@@ -36,7 +36,7 @@ namespace MyAzureStoragelibraryTest
 
             int count = Math.Min(_dataSource.Count - offset, 1000);
 
-            return new TableStorageServiceResult
+            return new TableStorageServiceResult<T>
             {
                Entities = _dataSource.GetRange(offset, count),
                ContinuationToken = newContinuationToken,

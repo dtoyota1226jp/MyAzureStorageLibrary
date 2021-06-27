@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MyAzureStoragelibrary
 {
-    public class TableStoragePagerResult
+    public class TableStoragePagerResult<T> where T:ITableEntity
     {
-        public List<TableEntity> CurrentEntities { get; set; }
+        public List<T> CurrentEntities { get; set; }
         public TableStoragePagerContext Context { get; internal set; }
     }
 }
